@@ -113,8 +113,8 @@ public class ReadFromCSV {
 
     private String addLeadingZero(String expression) {
 
-        if (expression.matches("([0-9]+[:])([1-9]$)")) {
-            String myConverted = expression.replaceAll("([0-9]+[:])([1-9]$)", "$10$2");
+        if (expression.matches("([0-9]+[:])([0-9]$)")) {
+            String myConverted = expression.replaceAll("([0-9]+[:])([0-9]$)", "$10$2");
             return myConverted;
         } else {
             return expression;
