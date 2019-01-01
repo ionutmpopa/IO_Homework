@@ -17,7 +17,7 @@ public class ReadFromCSV {
         return athlete;
     }
 
-    public void readData(String fileToBeParsed) {
+    public void readData(String fileToBeParsed, boolean headerTrueOrFalse) {
 
         Path theFile = Paths.get(fileToBeParsed);
         System.out.println("The .csv file: " + theFile);
@@ -25,13 +25,16 @@ public class ReadFromCSV {
         Charset charset = Charset.forName("UTF-8");
         try (BufferedReader reader = Files.newBufferedReader(theFile, charset)){
 
-            //Here we make sure the header is not taken into consideration.
-            reader.readLine();
             String line;
-
+            int iteration = 0;
             while ((line = reader.readLine()) != null) {
-
-
+                //Here we make sure that, when there's a header, it will not be taken into consideration.
+                if (headerTrueOrFalse) {
+                    if (iteration == 0) {
+                        iteration++;
+                        continue;
+                    }
+                }
                 BiathlonAthlete result = buildPersonList(line);
                 myBiathlonList.addAthlete(result);
             }
