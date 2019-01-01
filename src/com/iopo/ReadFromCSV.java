@@ -43,7 +43,7 @@ public class ReadFromCSV {
     public BiathlonAthlete buildPersonList (String expression) {
 
         TreeSet<BiathlonAthlete> myTempTree = new TreeSet<>(new TimeComparator());
-        String[] myFirstSplit = expression.split("\r\n");
+        String[] myFirstSplit = expression.split("\n");
 
         for (String myLine : myFirstSplit) {
 
