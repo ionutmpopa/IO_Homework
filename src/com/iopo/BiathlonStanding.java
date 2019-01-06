@@ -9,8 +9,7 @@ public class BiathlonStanding {
     public static void main(String[] args) {
 
         ReadFromCSV readMyData = new ReadFromCSV();
-        readMyData.readData(MY_FILE, true);
+        readMyData.parseFileAndOrderAthletes(MY_FILE, true);
         readMyData.printAthletes();
-
     }
 }

@@ -17,7 +17,7 @@ public class ReadFromCSV {
         return athlete;
     }
 
-    public void readData(String fileToBeParsed, boolean headerTrueOrFalse) {
+    public void parseFileAndOrderAthletes(String fileToBeParsed, boolean headerTrueOrFalse) {
 
         Path theFile = Paths.get(fileToBeParsed);
         System.out.println("The .csv file: " + theFile);
@@ -35,7 +35,7 @@ public class ReadFromCSV {
                         continue;
                     }
                 }
-                BiathlonAthlete result = buildPersonList(line);
+                BiathlonAthlete result = addAthleteAndGetFinalTime(line);
                 myBiathlonList.addAthlete(result);
             }
         } catch (IOException e) {
@@ -43,7 +43,7 @@ public class ReadFromCSV {
         }
     }
 
-    public BiathlonAthlete buildPersonList (String expression) {
+    public BiathlonAthlete addAthleteAndGetFinalTime (String expression) {
 
         TreeSet<BiathlonAthlete> myTempTree = new TreeSet<>(new TimeComparator());
         String[] myFirstSplit = expression.split("\n");
@@ -98,20 +98,7 @@ public class ReadFromCSV {
                 break;
             }
         }
-        switch (count) {
-            case 1:
-                return seconds += 10;
-            case 2:
-                return seconds += 20;
-            case 3:
-                return seconds += 30;
-            case 4:
-                return seconds += 40;
-            case 5:
-                return seconds += 50;
-            default:
-                return seconds;
-        }
+        return count != 0 ? seconds += count*10 : seconds;
     }
 
     private String addLeadingZero(String expression) {
