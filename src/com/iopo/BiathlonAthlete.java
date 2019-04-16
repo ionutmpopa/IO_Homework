@@ -63,6 +63,12 @@ public class BiathlonAthlete {
     }
 
     @Override
+    public int hashCode() {
+
+        return Objects.hash(athleteNumber, athleteName, countryCode, skiTimeResult, firstShootingRange, secondShootingRange, thirdShootingRange);
+    }
+
+    @Override
     public String toString() {
         return  athleteNumber +
                 "," + athleteName +

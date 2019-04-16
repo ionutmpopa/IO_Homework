@@ -6,16 +6,18 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeSet;
 
 public class ReadFromCSV {
 
     private BiathlonAthlete athlete;
-    private BiathlonAthleteTree myBiathlonList = new BiathlonAthleteTree();
 
-    public BiathlonAthlete getAthlete() {
-        return athlete;
+    TreeSet<BiathlonAthlete> myBiathlonList = new TreeSet<>((a1, a2) -> {
+        return a1.getSkiTimeResult().compareTo(a2.getSkiTimeResult());
     }
+    );
 
     public void parseFileAndOrderAthletes(String fileToBeParsed, boolean headerTrueOrFalse) {
 
@@ -36,7 +38,7 @@ public class ReadFromCSV {
                     }
                 }
                 BiathlonAthlete result = addAthleteAndGetFinalTime(line);
-                myBiathlonList.addAthlete(result);
+                myBiathlonList.add(result);
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -45,7 +47,7 @@ public class ReadFromCSV {
 
     public BiathlonAthlete addAthleteAndGetFinalTime (String expression) {
 
-        TreeSet<BiathlonAthlete> myTempTree = new TreeSet<>(new TimeComparator());
+        List<BiathlonAthlete> myAtList = new LinkedList<>();
         String[] myFirstSplit = expression.split("\n");
 
         for (String myLine : myFirstSplit) {
@@ -61,9 +63,9 @@ public class ReadFromCSV {
             BiathlonAthlete myAthlete = new BiathlonAthlete(myId, mySecondSplit[1], mySecondSplit[2], addLeadingZero(finalRangeTime),
                     mySecondSplit[4], mySecondSplit[5],mySecondSplit[6]);
 
-            myTempTree.add(myAthlete);
+            myAtList.add(myAthlete);
 
-            for (BiathlonAthlete eachAthlete : myTempTree) {
+            for (BiathlonAthlete eachAthlete : myAtList) {
                 athlete = eachAthlete;
                 return athlete;
             }
@@ -112,6 +114,12 @@ public class ReadFromCSV {
     }
 
     public void printAthletes() {
-        myBiathlonList.listAthletes();
+        for (BiathlonAthlete myAthlete : myBiathlonList) {
+            System.out.println(myAthlete);
+        }
+    }
+
+    public BiathlonAthlete getAthlete() {
+        return athlete;
     }
 }
